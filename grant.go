@@ -1,4 +1,4 @@
-package twilio
+package twiliogo
 
 // Grant defines interface of twilio permission model.
 // Any structures implement this interface can be bundled into a twilio access token.
