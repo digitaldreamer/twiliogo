@@ -9,12 +9,12 @@ type Grant interface {
 	Payload() interface{}
 }
 
-// NewConversationGrant creates a new permission grant for twilio video conversation service.
+// NewConversationGrant creates a new permission grant for twilio conversation service.
 func NewConversationGrant(sid string) Grant {
 	return &conversationGrant{sid: sid}
 }
 
-// twilio video conversation grant
+// twilio conversation grant
 type conversationGrant struct {
 	sid string
 }
@@ -30,6 +30,30 @@ func (g *conversationGrant) Payload() interface{} {
 		ConfigurationProfileSid string `json:"configuration_profile_sid,omitempty"`
 	}{
 		ConfigurationProfileSid: g.sid,
+	}
+}
+
+// NewVideoGrant creates a new video grant for twilio video conversation service.
+func NewVideoGrant(room string) Grant {
+	return &videoGrant{room: room}
+}
+
+// twilio video grant
+type videoGrant struct {
+	room string
+}
+
+// Key implements Grant interface.
+func (g *videoGrant) Key() string {
+	return "video"
+}
+
+// Payload implements Grant interface.
+func (g *videoGrant) Payload() interface{} {
+	return struct {
+		Room string `json:"room,omitempty"`
+	}{
+		Room: g.room,
 	}
 }
 
