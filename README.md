@@ -2,17 +2,23 @@
 
 A Golang library for twilio server side SDK.
 
+**NOTE: update adds video grant support**
+
 ## Installation
 
 Install the package with go:
 
+    # original
     go get github.com/xaviiic/twilioGo
+
+    # updated
+    go get github.com/digitaldreamer/twiliogo
 
 Import the package to your go file:
 
 ```go
 import (
-    twilio "github.com/xaviiic/twilioGo"
+    "github.com/digitaldreamer/twiliogo"
 )
 ```
 
@@ -24,14 +30,14 @@ import (
 To create an access token, pass the Twilio API account information first.
 ```go
 // first create token with twilio api configurations
-token := twilio.NewAccessToken(accountID, keyID, secret)
+token := twiliogo.NewAccessToken(accountID, keyID, secret)
 // setup token identity
 token.SetIdentity(identity)
 ```
 Once you have created a token instance, you can add access grant with desired API features.
 ```go
 // grant token access to progammable video API
-grant := twilio.NewConversationGrant(configurationProfileID)
+grant := twiliogo.NewConversationGrant(configurationProfileID)
 token.AddGrant(grant)
 ```
 Then transform token to JWT format for client side usages.
@@ -44,7 +50,7 @@ jwt, err := token.ToJWT()
 
 Create a capability token instance first with API account information.
 ```go
-capability := twilio.NewCapability(accountID, authToken)
+capability := twiliogo.NewCapability(accountID, authToken)
 ```
 Then setup the capabilities of token and output a JWT format token.
 ```go
@@ -58,9 +64,9 @@ jwt, err := capability.ToJWT()
 ### Chaining
 Generating token steps can be chained together.
 ```go
-token, err := twilio.NewAccessToken(accountSid, apiKey, apiSecret).
+token, err := twiliogo.NewAccessToken(accountSid, apiKey, apiSecret).
     SetIdentity(identity).
-    AddGrant(twilio.NewConversationGrant(configurationSid)).
+    AddGrant(twiliogo.NewConversationGrant(configurationSid)).
     SetTTL(30 * time.Minute).
     ToJWT()
 ```
